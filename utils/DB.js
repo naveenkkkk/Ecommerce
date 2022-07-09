@@ -15,11 +15,7 @@ const connectDB = async () => {
 };
 
 export class Product {
-    /** 
-     * Creates an instance of Product. 
-     * @param {*} data 
-     * @memberof Product 
-     */ 
+
     constructor(data) { 
       if (!data._id) { 
         data._id = mongoose.Types.ObjectId(); 
@@ -32,10 +28,6 @@ export class Product {
       this.stock = data.stock; 
     } 
    
-    /** 
-     * Turns the properties of this class instance into a plain JSON 
-     * @return {*} JSON object with all Product properties 
-     */ 
     toJson() { 
       return { 
         _id: this._id,
@@ -46,23 +38,11 @@ export class Product {
         stock: this.stock, 
       }; 
     } 
-    /** 
-     * Aliasing _id to id 
-     * 
-     * @readonly 
-     * @return {string} ID string 
-     * @memberof Product 
-     */ 
+    
     get id() { 
       return this._id; 
     } 
    
-    /** 
-     * Saves an entry to the database or updates it if necessary 
-     * 
-     * @return {Promise<Product>} the current instance of this class 
-     * @memberof Product 
-     */ 
     async save() { 
       await connectDB(); 
       ProductModel.findById(this._id, (err, docs) => { 
@@ -80,14 +60,7 @@ export class Product {
       }); 
       return this; 
     } 
-   
-    /** 
-     * Returns all products stored in the database 
-     * 
-     * @static 
-     * @return {Promise<Product[]>} Product instances 
-     * @memberof Product 
-     */ 
+
     static async find() { 
       await connectDB(); 
       const arr = []; 
@@ -99,15 +72,6 @@ export class Product {
       return arr; 
     } 
    
-    /** 
-     * Searches the database and returns the first instance that matches the passed 
-     * properties 
-     * 
-     * @static 
-     * @param {*} searchCondition an object of properties to look for 
-     * @return {Promise<Product>} the instance of first match 
-     * @memberof Product 
-     */ 
     static async findOne(searchCondition) { 
       await connectDB(); 
       let product = null; 
@@ -116,20 +80,12 @@ export class Product {
           if (result) product = result[0]; 
         }) 
         .catch(err => { 
-          if (err) console.log('Error in FindOne Product'); 
+          if (err) console.log(`Error in FindOne Product: ${err}`); 
           return null; 
         }); 
       return new Product(product); 
     } 
-   
-    /** 
-     * Removes the first instance that matches the search parameters 
-     * 
-     * @static 
-     * @param {*} searchCondition an object of properties to look for 
-     * @return {Promise<undefined>} 
-     * @memberof Product 
-     */ 
+
     static async remove(searchCondition) { 
       await connectDB(); 
       await ProductModel.deleteOne(searchCondition) 

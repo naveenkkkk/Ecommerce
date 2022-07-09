@@ -6,7 +6,7 @@ const ProductSchema = new Schema({
     description: String,
     imageUrl: String,
     price: {
-        type: Schema.Types.Decimal128,
+        type: Number,
         default: 500,
         min: 500,
         max: 25000, 
@@ -20,6 +20,8 @@ const ProductSchema = new Schema({
         default: false,
     }
 });
+
+mongoose.models = {};
 
 const ProductModel = mongoose.model("Products", ProductSchema);
 

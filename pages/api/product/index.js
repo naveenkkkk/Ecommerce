@@ -1,8 +1,6 @@
 import Cors from "cors";
 import nextConnect from "next-connect";
 
-import data from "../../../Data";
-
 import { Product } from "@/utils/DB";
 import initMiddleware from "@/utils/init-middleware";
 import { makeResponse, status, message } from "@/utils/response";
