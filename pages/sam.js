@@ -3,10 +3,3 @@ const Sam = () => (
 );
 
 export default Sam;
-
-
-//
-
-//
-
-// 
