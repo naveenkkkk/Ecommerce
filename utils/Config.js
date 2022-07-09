@@ -1,0 +1,1 @@
+export const Database_URL = "mongodb+srv://root:root@cluster0.syvha.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";

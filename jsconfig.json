@@ -5,6 +5,7 @@
             // "@/utils/*": ["utils/*"],
             "@/lib/*": ["lib/*"],
             "@/models/*": ["models/*"],
+            "@/utils/*": ["utils/*"],
         }
     }
 }

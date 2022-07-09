@@ -1,38 +1,38 @@
-const Product = (req, res) => {
+import Cors from "cors";
+import nextConnect from "next-connect";
 
-    const productsFromDB = [
-        {
-            name: "Sam",
-            description: "Also known as Naveen kumar S",
-            imageUrl: "https://static.spotboye.com/uploads/Sam_2021-9-14-12-4-12_thumbnail.jpg",
-            price: 1000
-        },
-        {
-            name: "Navin",
-            description: "3D",
-            imageUrl: "https://static.spotboye.com/uploads/Sam_2021-9-14-12-4-12_thumbnail.jpg",
-            price: 1000
-        },
-        {
-            name: "Sangeetha",
-            description: "3D",
-            imageUrl: "https://static.spotboye.com/uploads/Sam_2021-9-14-12-4-12_thumbnail.jpg",
-            price: 1000
-        },
-        {
-            name: "Samntha",
-            description: "Ruth",
-            imageUrl: "https://static.spotboye.com/uploads/Sam_2021-9-14-12-4-12_thumbnail.jpg",
-            price: 1000
+import data from "../../../Data";
+
+import { Product } from "@/utils/DB";
+import initMiddleware from "@/utils/init-middleware";
+import { makeResponse, status, message } from "@/utils/response";
+
+
+const cors = initMiddleware(
+    Cors({
+        methods: ["GET"]
+    })
+);
+
+const apiRoute = nextConnect({
+    onError: (err, req, res, next) => {
+        res.status(500).end("Something broke!");
+    },
+    onNoMatch: (req, res, next) => {
+        res.status(404).end("Page is not found");
+    },
+})
+    .get(async (req, res) => {
+        try {
+            await cors(req, res);
+
+            const products = await Product.find();
+
+            return makeResponse(res, status.OK, message.PRODUCT_FETCHED, products);
+        } catch (e) {
+            return makeResponse(res, status.INTERNAL_SERVER_ERROR, message.ERROR);
         }
-    ]
 
-    const returnValue = {
-        message: "The Products Available in The Shop...",
-        products: productsFromDB
-    }
+    });
 
-    return res.status(200).json(returnValue);
-}
-
-export default Product;
+export default apiRoute;
